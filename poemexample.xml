@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<poem version="" id="1" date_created="" date_modified="" last_modified="">
+    <header>
+        <poem_name> example </poem_name>
+        <poem_author> Andrew V. Prosikhin </poem_author>
+        <poem_date_written> August 25, 2016 </poem_date_written>
+    </header>
+    <body>
+        <poem_content>
+            Hello Poem XML!
+        </poem_content>
+    </body>
+</poem>
