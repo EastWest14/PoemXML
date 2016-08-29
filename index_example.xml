@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Index:index xmlns:Index="https://github.com/EastWest14/PoemXML/index_schema" index_version="0.0" date_created="" date_modified="">
+    <Index:indexed_entity>
+        <Index:poem_id>1</Index:poem_id>
+        <Index:path>./filepath</Index:path>
+    </Index:indexed_entity>
+    <Index:indexed_entity>
+        <Index:poem_id>2</Index:poem_id>
+        <Index:path>./filepath2</Index:path>
+    </Index:indexed_entity>
+    <Index:indexed_entity>
+        <Index:poem_id>3</Index:poem_id>
+        <Index:path>./filepath3</Index:path>
+    </Index:indexed_entity>
+</Index:index>
