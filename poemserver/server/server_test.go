@@ -7,8 +7,8 @@ import (
 	"testing"
 )
 
-func TestHandleRequest(t *testing.T) {
-	mockServer := httptest.NewServer(http.HandlerFunc(HandleRequest))
+func TestHandleDefaultRequest(t *testing.T) {
+	mockServer := httptest.NewServer(http.HandlerFunc(HandleDefaultRequest))
 	defer mockServer.Close()
 
 	resp, err := http.Get(mockServer.URL)
