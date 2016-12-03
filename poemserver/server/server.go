@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+const STANDARD_RESPONSE = "Hello, world!"
+
 func HandleRequest(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello, world!")
+	fmt.Fprint(w, STANDARD_RESPONSE)
 }
