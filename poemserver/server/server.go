@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"github.com/gorilla/mux"
 	"net/http"
 	"net/url"
 	"poemXML/poemserver/poemstore"
@@ -16,12 +17,28 @@ func SetPoemStore(pStore *poemstore.Store) {
 	poemStore = pStore
 }
 
-func HandleDefaultRequest(w http.ResponseWriter, r *http.Request) {
+func CreateAndConfigureRouter() *mux.Router {
+	r := mux.NewRouter()
+	r.HandleFunc("/poems", DefaultHandler).Methods("GET")
+	r.HandleFunc("/poems/list", PoemListHandler)
+
+	return r
+}
+
+func DefaultHandler(w http.ResponseWriter, r *http.Request) {
 	urlPath := r.URL.Path
 
 	fmt.Println(urlPath)
 
 	fmt.Fprint(w, STANDARD_RESPONSE)
+}
+
+func PoemListHandler(w http.ResponseWriter, r *http.Request) {
+	urlPath := r.URL.Path
+
+	fmt.Println(urlPath)
+
+	fmt.Fprint(w, "List of poems")
 }
 
 func firstPartOfPath(u *url.URL) string {

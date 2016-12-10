@@ -8,8 +8,8 @@ import (
 
 func main() {
 	setup()
-	//http.HandleFunc("/poems", server.HandlePoemsRequest)
-	http.HandleFunc("/", server.HandleDefaultRequest)
+	r := server.CreateAndConfigureRouter()
+	http.Handle("/", r)
 	http.ListenAndServe(":8080", nil)
 }
 
