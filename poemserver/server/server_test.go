@@ -1,13 +1,22 @@
-package server
+package server_test
 
 import (
-	"io/ioutil"
-	"net/http"
-	"net/http/httptest"
-	"net/url"
+	//"io/ioutil"
+	//"net/http"
+	//"net/http/httptest"
+	//"net/url"
+	. "poemXML/poemserver/server"
 	"testing"
 )
 
+func TestNewServer(t *testing.T) {
+	aServer := NewServer()
+	if aServer == nil {
+		t.Error("Server initialized to nil")
+	}
+}
+
+/*
 func TestHandleDefaultRequest(t *testing.T) {
 	mockServer := httptest.NewServer(http.HandlerFunc(HandleDefaultRequest))
 	defer mockServer.Close()
@@ -50,4 +59,4 @@ func TestFirstPartOfPath(t *testing.T) {
 			t.Errorf("Error in case %d. Expected %s, got %s", i, aCase.expectedFirstPart, firstPart)
 		}
 	}
-}
+}*/

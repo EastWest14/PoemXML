@@ -11,21 +11,27 @@ import (
 
 const STANDARD_RESPONSE = "Hello, world!"
 
-var poemStore *poemstore.Store
-
-func SetPoemStore(pStore *poemstore.Store) {
-	poemStore = pStore
+type Server struct {
+	poemStore *poemstore.Store
 }
 
-func CreateAndConfigureRouter() *mux.Router {
+func NewServer() *Server {
+	return &Server{}
+}
+
+func (s *Server) CreateAndConfigureRouter() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/poems", DefaultHandler).Methods("GET")
-	r.HandleFunc("/poems/list", PoemListHandler)
+	r.HandleFunc("/poems", s.DefaultHandler).Methods("GET")
+	r.HandleFunc("/poems/list", s.PoemListHandler)
 
 	return r
 }
 
-func DefaultHandler(w http.ResponseWriter, r *http.Request) {
+func (s *Server) SetPoemStore(pStore *poemstore.Store) {
+	s.poemStore = pStore
+}
+
+func (s *Server) DefaultHandler(w http.ResponseWriter, r *http.Request) {
 	urlPath := r.URL.Path
 
 	fmt.Println(urlPath)
@@ -33,11 +39,7 @@ func DefaultHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, STANDARD_RESPONSE)
 }
 
-func PoemListHandler(w http.ResponseWriter, r *http.Request) {
-	urlPath := r.URL.Path
-
-	fmt.Println(urlPath)
-
+func (s *Server) PoemListHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "List of poems")
 }
 
@@ -51,16 +53,3 @@ func firstPartOfPath(u *url.URL) string {
 
 	return ""
 }
-
-/*
-func HandlePoemsRequest(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case "GET":
-		fmt.Fprint(w, "List of poems")
-	case "POST":
-		http.Error(w, "Invalid method - use GET!", http.StatusMethodNotAllowed)
-	default:
-		panic("Invalid method")
-	}
-}
-*/

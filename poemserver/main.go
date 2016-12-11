@@ -6,14 +6,17 @@ import (
 	"poemXML/poemserver/server"
 )
 
+var poemServer *server.Server
+
 func main() {
 	setup()
-	r := server.CreateAndConfigureRouter()
+	poemServer = server.NewServer()
+	r := poemServer.CreateAndConfigureRouter()
 	http.Handle("/", r)
 	http.ListenAndServe(":8080", nil)
 }
 
 func setup() {
 	poemStore := poemstore.NewStore()
-	server.SetPoemStore(poemStore)
+	poemServer.SetPoemStore(poemStore)
 }
