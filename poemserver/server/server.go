@@ -12,19 +12,28 @@ import (
 const STANDARD_RESPONSE = "Hello, world!"
 
 type Server struct {
+	router    *mux.Router
 	poemStore *poemstore.Store
 }
 
 func NewServer() *Server {
-	return &Server{}
+	server := &Server{}
+	server.configureRouter()
+	return server
 }
 
-func (s *Server) CreateAndConfigureRouter() *mux.Router {
-	r := mux.NewRouter()
-	r.HandleFunc("/poems", s.DefaultHandler).Methods("GET")
-	r.HandleFunc("/poems/list", s.PoemListHandler)
+func (s *Server) Start() {
+	http.Handle("/", s.router)
+	http.ListenAndServe(":8080", nil)
+}
 
-	return r
+func (s *Server) configureRouter() {
+	router := mux.NewRouter()
+
+	router.HandleFunc("/poems", s.DefaultHandler).Methods("GET")
+	router.HandleFunc("/poems/list", s.PoemListHandler)
+
+	s.router = router
 }
 
 func (s *Server) SetPoemStore(pStore *poemstore.Store) {
