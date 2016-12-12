@@ -1,10 +1,7 @@
 package server_test
 
 import (
-	//"io/ioutil"
-	//"net/http"
-	//"net/http/httptest"
-	//"net/url"
+	"poemXML/poemserver/handlers"
 	. "poemXML/poemserver/server"
 	"testing"
 )
@@ -16,24 +13,24 @@ func TestNewServer(t *testing.T) {
 	}
 }
 
-/*
-func TestHandleDefaultRequest(t *testing.T) {
-	mockServer := httptest.NewServer(http.HandlerFunc(HandleDefaultRequest))
-	defer mockServer.Close()
+func TestSetHandlers(t *testing.T) {
+	aServer := NewServer()
+	h := handlers.NewHandlersInstance()
+	aServer.SetHandlers(h)
+	if aServer.GetHandlers() == nil {
+		t.Errorf("Error in setting handlers, handlers are nil")
+	}
+}
 
-	resp, err := http.Get(mockServer.URL)
-	if err != nil {
-		t.Errorf(err.Error())
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		t.Errorf(err.Error())
+/*func firstPartOfPath(u *url.URL) string {
+	urlPath := u.Path
+	pathParts := strings.Split(urlPath, "/")
+
+	if len(pathParts) > 1 {
+		return pathParts[1]
 	}
 
-	if string(body) != STANDARD_RESPONSE {
-		t.Errorf("Expected response %s, got %s", STANDARD_RESPONSE, string(body))
-	}
+	return ""
 }
 
 func TestFirstPartOfPath(t *testing.T) {

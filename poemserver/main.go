@@ -2,18 +2,15 @@ package main
 
 import (
 	//"poemXML/poemserver/poemstore"
+	"poemXML/poemserver/handlers"
 	"poemXML/poemserver/server"
 )
 
 var poemServer *server.Server
 
 func main() {
-	setup()
 	poemServer = server.NewServer()
+	handlers := handlers.NewHandlersInstance()
+	poemServer.SetHandlers(handlers)
 	poemServer.Start()
-}
-
-func setup() {
-	//poemStore := poemstore.NewStore()
-	//poemServer.SetPoemStore(poemStore)
 }
