@@ -1,9 +1,7 @@
 package handlers
 
-import (
-	"poemXML/poemserver/poemstore"
-)
+import ()
 
-func (h *Handlers) GetPoemStore() *poemstore.Store {
+func (h *Handlers) GetPoemStore() PoemStoreT {
 	return h.poemStore
 }

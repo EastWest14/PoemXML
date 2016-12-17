@@ -7,7 +7,7 @@ import (
 )
 
 func TestNewPoemList(t *testing.T) {
-	aPoemList := NewPoemList()
+	aPoemList := New()
 	if aPoemList == nil {
 		t.Error("New PoemList initialized to zero")
 	}
@@ -16,7 +16,7 @@ func TestNewPoemList(t *testing.T) {
 func TestPoemListString(t *testing.T) {
 	//TODO: real test
 
-	aPoemList := NewPoemList()
+	aPoemList := New()
 	descriptionString := aPoemList.String()
 
 	if !strings.Contains(descriptionString, INTRO_DESCRIPTION) {

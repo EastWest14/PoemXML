@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	. "poemXML/poemserver/handlers"
+	"poemXML/poemserver/poemlist"
 	"poemXML/poemserver/poemstore"
 	"testing"
 )
@@ -51,8 +52,22 @@ func TestHandleDefaultRequest(t *testing.T) {
 	}
 }
 
+type mockPoemStore struct {
+	listOfPoems *poemlist.PoemList
+}
+
+var _ PoemStoreT = &mockPoemStore{}
+
+func (mockS *mockPoemStore) GetAllPoems() *poemlist.PoemList {
+	return mockS.listOfPoems
+}
+
 func TestPoemListHandler(t *testing.T) {
 	h := NewHandlersInstance()
+
+	poemStore := &mockPoemStore{listOfPoems: poemlist.New()}
+	h.SetPoemStore(poemStore)
+
 	mockServer := httptest.NewServer(http.HandlerFunc(h.PoemListHandler))
 	defer mockServer.Close()
 
@@ -66,7 +81,7 @@ func TestPoemListHandler(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 
-	expectedResponse := "List of poems"
+	expectedResponse := poemStore.GetAllPoems().String()
 
 	if string(body) != expectedResponse {
 		t.Errorf("Expected response %s, got %s", expectedResponse, string(body))

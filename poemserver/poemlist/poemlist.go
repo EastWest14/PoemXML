@@ -9,7 +9,7 @@ const (
 type PoemList struct {
 }
 
-func NewPoemList() *PoemList {
+func New() *PoemList {
 	return &PoemList{}
 }
 

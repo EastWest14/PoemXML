@@ -4,18 +4,18 @@ import (
 	"fmt"
 	"github.com/EastWest14/gAssert"
 	"net/http"
-	"poemXML/poemserver/poemstore"
+	"poemXML/poemserver/poemlist"
 )
 
 type Handlers struct {
-	poemStore *poemstore.Store
+	poemStore PoemStoreT
 }
 
 func NewHandlersInstance() *Handlers {
 	return &Handlers{}
 }
 
-func (h *Handlers) SetPoemStore(store *poemstore.Store) {
+func (h *Handlers) SetPoemStore(store PoemStoreT) {
 	h.poemStore = store
 }
 
@@ -26,6 +26,13 @@ func (h *Handlers) DefaultHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handlers) PoemListHandler(w http.ResponseWriter, r *http.Request) {
-	gAssert.AssertHard(h.poemStore != nil || true, "PoemStore is nil")
-	fmt.Fprint(w, "List of poems")
+	gAssert.AssertHard(h != nil, "Handlers structure is nil")
+	gAssert.AssertHard(h.poemStore != nil, "PoemStore is nil")
+
+	listOfAllPoems := h.poemStore.GetAllPoems()
+	fmt.Fprint(w, listOfAllPoems.String())
+}
+
+type PoemStoreT interface {
+	GetAllPoems() *poemlist.PoemList
 }

@@ -11,6 +11,6 @@ func NewStore() *Store {
 	return &Store{}
 }
 
-func (pStore *Store) GetAllPoems() (poemlist *poemlist.PoemList) {
-	return nil
+func (pStore *Store) GetAllPoems() (plist *poemlist.PoemList) {
+	return poemlist.New()
 }

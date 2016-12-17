@@ -13,7 +13,6 @@ type Server struct {
 
 func NewServer() *Server {
 	server := &Server{}
-	server.configureRouter()
 	return server
 }
 
@@ -22,6 +21,7 @@ func (s *Server) SetHandlers(h *handlers.Handlers) {
 }
 
 func (s *Server) Start() {
+	s.configureRouter()
 	http.Handle("/", s.router)
 	http.ListenAndServe(":8080", nil)
 }
