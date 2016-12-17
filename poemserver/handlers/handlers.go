@@ -3,13 +3,19 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"poemXML/poemserver/poemstore"
 )
 
 type Handlers struct {
+	poemStore *poemstore.Store
 }
 
 func NewHandlersInstance() *Handlers {
 	return &Handlers{}
+}
+
+func (h *Handlers) SetPoemStore(store *poemstore.Store) {
+	h.poemStore = store
 }
 
 const STANDARD_RESPONSE = "Hello, world!"

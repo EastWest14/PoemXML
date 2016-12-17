@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	. "poemXML/poemserver/handlers"
+	"poemXML/poemserver/poemstore"
 	"testing"
 )
 
@@ -12,6 +13,21 @@ func TestNewHandlersInstance(t *testing.T) {
 	handlers := NewHandlersInstance()
 	if handlers == nil {
 		t.Errorf("Error creating handlers - nil returned")
+	}
+}
+
+func TestSetPoemStore(t *testing.T) {
+	handlers := NewHandlersInstance()
+
+	handlers.SetPoemStore(nil)
+	if handlers.GetPoemStore() != nil {
+		t.Errorf("Expecting poem store to be nil, got %v", handlers.GetPoemStore())
+	}
+
+	poemStore := poemstore.NewStore()
+	handlers.SetPoemStore(poemStore)
+	if handlers.GetPoemStore() == nil {
+		t.Errorf("Expecting poem store to be non-nil, got nil")
 	}
 }
 
