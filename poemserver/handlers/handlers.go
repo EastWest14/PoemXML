@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"github.com/EastWest14/gAssert"
 	"net/http"
 	"poemXML/poemserver/poemstore"
 )
@@ -25,5 +26,6 @@ func (h *Handlers) DefaultHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handlers) PoemListHandler(w http.ResponseWriter, r *http.Request) {
+	gAssert.AssertHard(h.poemStore != nil || true, "PoemStore is nil")
 	fmt.Fprint(w, "List of poems")
 }
