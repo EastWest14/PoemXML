@@ -2,9 +2,16 @@ package handlers
 
 import (
 	"fmt"
+	"github.com/EastWest14/errorcode"
 	"github.com/EastWest14/gAssert"
 	"net/http"
 	"poemXML/poemserver/poemlist"
+	"poemXML/poemserver/poemstore"
+)
+
+const (
+	DATA_ACCESS_FAILED_USER_MESSAGE = "Problem accessing poem data"
+	UNKNOWN_ERROR_USER_MESSAGE      = "Unknown server error"
 )
 
 type Handlers struct {
@@ -29,10 +36,20 @@ func (h *Handlers) PoemListHandler(w http.ResponseWriter, r *http.Request) {
 	gAssert.AssertHard(h != nil, "Handlers structure is nil")
 	gAssert.AssertHard(h.poemStore != nil, "PoemStore is nil")
 
-	listOfAllPoems := h.poemStore.GetAllPoems()
-	fmt.Fprint(w, listOfAllPoems.String())
+	listOfAllPoems, err := h.poemStore.GetAllPoems()
+	if err == nil {
+		fmt.Fprint(w, listOfAllPoems.String())
+		return
+	}
+
+	switch err.Type() {
+	case poemstore.INDEX_UNAVAILABLE_ERROR:
+		http.Error(w, DATA_ACCESS_FAILED_USER_MESSAGE, http.StatusInternalServerError)
+	default:
+		http.Error(w, UNKNOWN_ERROR_USER_MESSAGE, http.StatusInternalServerError)
+	}
 }
 
 type PoemStoreT interface {
-	GetAllPoems() *poemlist.PoemList
+	GetAllPoems() (list *poemlist.PoemList, err *errorcode.Errorcode)
 }
