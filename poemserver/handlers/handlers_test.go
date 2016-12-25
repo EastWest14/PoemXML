@@ -133,7 +133,6 @@ func TestPoemListHandler(t *testing.T) {
 
 }
 
-
 func TestPoemReader(t *testing.T) {
 	//TODO: Only poem not found case implemented.
 	h := NewHandlersInstance()
