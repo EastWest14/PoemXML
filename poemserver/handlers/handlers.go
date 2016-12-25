@@ -22,10 +22,10 @@ type Handlers struct {
 }
 
 func NewHandlersInstance() *Handlers {
-	return &Handlers{requestVarExtractor: &extractor.RequestVarExtractor{}}
+	return &Handlers{requestVarExtractor: extractor.New()}
 }
 
-var _ requestVarExtractorT = &extractor.RequestVarExtractor{}
+var _ requestVarExtractorT = extractor.New()
 
 func (h *Handlers) SetPoemStore(store PoemStoreT) {
 	h.poemStore = store
