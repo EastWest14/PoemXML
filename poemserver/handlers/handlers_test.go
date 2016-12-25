@@ -132,3 +132,43 @@ func TestPoemListHandler(t *testing.T) {
 	}
 
 }
+
+
+func TestPoemReader(t *testing.T) {
+	//TODO: Only poem not found case implemented.
+	h := NewHandlersInstance()
+	requestExtractor := &mockRequestVarExtractor{map[string]string{"poem_id": "13"}}
+	h.SetRequestVarExtractor(requestExtractor)
+
+	poemStore := &mockPoemStore{}
+	h.SetPoemStore(poemStore)
+
+	mockServer := httptest.NewServer(http.HandlerFunc(h.PoemReader))
+	defer mockServer.Close()
+
+	resp, err := http.Get(mockServer.URL)
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	bodyString := strings.Trim(string(body), " \n")
+	statusCode := resp.StatusCode
+
+	if statusCode != 404 || UNKNOWN_POEM_USER_MESSAGE != bodyString {
+		t.Errorf("Expected error '%d' and body '%s', got: '%d' and body '%s'", 404, UNKNOWN_POEM_USER_MESSAGE, statusCode, bodyString)
+	}
+}
+
+type mockRequestVarExtractor struct {
+	valueDictionary map[string]string
+}
+
+func (mrve *mockRequestVarExtractor) ValueForKey(r *http.Request, key string) (value string, ok bool) {
+	value, ok = mrve.valueDictionary[key]
+	return value, ok
+}

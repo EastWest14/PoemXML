@@ -5,22 +5,27 @@ import (
 	"github.com/EastWest14/errorcode"
 	"github.com/EastWest14/gAssert"
 	"net/http"
+	"poemXML/poemserver/handlers/extractor"
 	"poemXML/poemserver/poemlist"
 	"poemXML/poemserver/poemstore"
 )
 
 const (
 	DATA_ACCESS_FAILED_USER_MESSAGE = "Problem accessing poem data"
+	UNKNOWN_POEM_USER_MESSAGE       = "Poem not found"
 	UNKNOWN_ERROR_USER_MESSAGE      = "Unknown server error"
 )
 
 type Handlers struct {
-	poemStore PoemStoreT
+	poemStore           PoemStoreT
+	requestVarExtractor requestVarExtractorT
 }
 
 func NewHandlersInstance() *Handlers {
-	return &Handlers{}
+	return &Handlers{requestVarExtractor: &extractor.RequestVarExtractor{}}
 }
+
+var _ requestVarExtractorT = &extractor.RequestVarExtractor{}
 
 func (h *Handlers) SetPoemStore(store PoemStoreT) {
 	h.poemStore = store
@@ -50,6 +55,22 @@ func (h *Handlers) PoemListHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (h *Handlers) PoemReader(w http.ResponseWriter, r *http.Request) {
+	poemId, ok := h.requestVarExtractor.ValueForKey(r, "poem_id")
+	gAssert.Assert(ok, "Poem id not passed in - error in API processing")
+
+	if poemId == "" {
+		//Makes program compile
+	}
+
+	http.Error(w, UNKNOWN_POEM_USER_MESSAGE, 404)
+}
+
 type PoemStoreT interface {
 	GetAllPoems() (list *poemlist.PoemList, err *errorcode.Errorcode)
+}
+
+//Used for unit test mocking
+type requestVarExtractorT interface {
+	ValueForKey(r *http.Request, key string) (value string, ok bool)
 }

@@ -3,6 +3,7 @@ package poemstore
 import (
 	"github.com/EastWest14/errorcode"
 	"poemXML/poemserver/poemlist"
+	"poemXML/poemserver/poem"
 )
 
 const (
@@ -16,6 +17,10 @@ func NewStore() *Store {
 }
 
 func (pStore *Store) GetAllPoems() (plist *poemlist.PoemList, err *errorcode.Errorcode) {
-	return nil, errorcode.New(INDEX_UNAVAILABLE_ERROR, "Can't find index file")
-	//return poemlist.New(), nil
+	//return nil, errorcode.New(INDEX_UNAVAILABLE_ERROR, "Can't find index file")
+	return poemlist.New(), nil
+}
+
+func (pStore *Store) GetPoemByID() (p *poem.Record, err *errorcode.Errorcode) {
+	return nil, nil
 }

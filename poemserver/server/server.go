@@ -29,8 +29,9 @@ func (s *Server) Start() {
 func (s *Server) configureRouter() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/poems", s.handlers.DefaultHandler).Methods("GET")
+	router.HandleFunc("/poems", s.handlers.DefaultHandler)
 	router.HandleFunc("/poems/list", s.handlers.PoemListHandler)
+	router.HandleFunc("/poems/{poem_id}", s.handlers.PoemReader)
 
 	s.router = router
 }
