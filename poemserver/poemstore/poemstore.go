@@ -2,18 +2,21 @@ package poemstore
 
 import (
 	"github.com/EastWest14/errorcode"
-	"poemXML/poemserver/poemlist"
+	"poemXML/poemserver/index"
 	"poemXML/poemserver/poem"
+	"poemXML/poemserver/poemlist"
 )
 
 const (
 	INDEX_UNAVAILABLE_ERROR = "INDEX_UNAVAILABLE"
 )
 
-type Store struct{}
+type Store struct {
+	storeIndex *index.Index
+}
 
-func NewStore() *Store {
-	return &Store{}
+func NewStore(storeIndex *index.Index) *Store {
+	return &Store{storeIndex: storeIndex}
 }
 
 func (pStore *Store) GetAllPoems() (plist *poemlist.PoemList, err *errorcode.Errorcode) {

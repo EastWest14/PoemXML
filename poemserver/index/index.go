@@ -1,10 +1,6 @@
-package indexparse
+package index
 
-import (
-	"encoding/xml"
-	"fmt"
-	"time"
-)
+import ()
 
 const (
 	INDEX_VERSION  = "0.0"
@@ -18,17 +14,43 @@ const (
 )
 
 type Index struct {
-	IndexVersion string
-	DateCreated  time.Time
-	DateModified time.Time
-	Elements     []*IndexedElement
+	indexPath string
+	//IndexVersion string
+	//DateCreated  time.Time
+	//DateModified time.Time
+	//Elements     []*IndexedElement
 }
 
-func NewIndex(dateCreated, dateModified time.Time, elements []*IndexedElement) *Index {
-	return &Index{IndexVersion: INDEX_VERSION, DateCreated: dateCreated, DateModified: dateModified, Elements: elements}
+func New(indexPath string) *Index {
+	return &Index{indexPath: indexPath}
 }
 
-func (in *Index) ConvertToXMLString() string {
+func GetPoemPathById(id int) (filepath string) {
+	return ""
+}
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/*func (in *Index) ConvertToXMLString() string {
 	rootOpenerFilled := fmt.Sprintf(ROOT_OPENER, in.IndexVersion, in.DateCreated.String(), in.DateModified.String())
 	var elementsRaw []byte
 	if len(in.Elements) <= 0 {
@@ -62,4 +84,4 @@ type IndexedElementParsed struct {
 	XMLName xml.Name `xml:"indexed_entity"`
 	PoemId  string   `xml:"poem_id"`
 	Path    string   `xml:"path"`
-}
+}*/

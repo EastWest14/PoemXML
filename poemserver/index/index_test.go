@@ -1,44 +1,25 @@
-package indexparse
+package index_test
 
 import (
-	"encoding/xml"
-	"fmt"
-	"strconv"
+	. "poemXML/poemserver/index"
 	"testing"
-	"time"
 )
 
-func TestNewIndex(t *testing.T) {
-	dCreated := time.Date(2016, 8, 28, 12, 0, 0, 0, time.UTC)
-	dModified := time.Date(2016, 8, 28, 12, 30, 0, 0, time.UTC)
-	elements := []*IndexedElement{}
-	const (
-		poemId   = 1
-		poemPath = "example/path"
-	)
-	elements = append(elements, NewIndexedElement(poemId, poemPath))
-	ind := NewIndex(dCreated, dModified, elements)
-	if ind.IndexVersion != INDEX_VERSION {
-		t.Errorf("Index initialized incorrectly. Expected index version: %s, got %s.", INDEX_VERSION, ind.IndexVersion)
+func TestNew(t *testing.T) {
+	const filepath = "./Fake_filepath"
+	anIndex := New(filepath)
+
+	if anIndex == nil {
+		t.Errorf("Failed to initialize index - it is nil")
 	}
-	if ind.DateCreated != dCreated {
-		t.Errorf("Index initialized incorrectly. Expected date created: %s, got %s.", dCreated.String(), ind.DateCreated.String())
-	}
-	if ind.DateModified != dModified {
-		t.Errorf("Index initialized incorrectly. Expected date modified: %s, got %s.", dModified.String(), ind.DateModified.String())
-	}
-	if len(ind.Elements) != 1 {
-		t.Fatal("Index initialized incorrectly. Expected %d element(s), got %d element(s).", 1, len(ind.Elements))
-	}
-	if ind.Elements[0].PoemId != poemId {
-		t.Errorf("Indexed element initialized incorrectly. Expected poem id: %d, got %d.", poemId, ind.Elements[0].PoemId)
-	}
-	if ind.Elements[0].PoemPath != poemPath {
-		t.Errorf("Indexed element initialized incorrectly. Expected poem path: %s, got %s.", poemPath, ind.Elements[0].PoemPath)
+
+	extractedFilepath := anIndex.GetFilepath()
+	if extractedFilepath != filepath {
+		t.Errorf("Filepath of a new index set incorrectly. Expected %s, got %s", filepath, extractedFilepath)
 	}
 }
 
-func TestConvertIndexToXMLString(t *testing.T) {
+/*func TestConvertIndexToXMLString(t *testing.T) {
 	dCreated := time.Date(2016, 8, 28, 12, 0, 0, 0, time.UTC)
 	dModified := time.Date(2016, 8, 28, 12, 30, 0, 0, time.UTC)
 	const (
@@ -84,4 +65,4 @@ func TestConvertIndexToXMLString(t *testing.T) {
 	if indParsed.Elements[1].Path != PATH_TWO {
 		t.Errorf("Index encoded incorrectly. Expected path[1]=%s, got %s", PATH_TWO, indParsed.Elements[1].Path)
 	}
-}
+}*/

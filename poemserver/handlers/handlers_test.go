@@ -27,7 +27,7 @@ func TestSetPoemStore(t *testing.T) {
 		t.Errorf("Expecting poem store to be nil, got %v", handlers.GetPoemStore())
 	}
 
-	poemStore := poemstore.NewStore()
+	poemStore := poemstore.NewStore(nil)
 	handlers.SetPoemStore(poemStore)
 	if handlers.GetPoemStore() == nil {
 		t.Errorf("Expecting poem store to be non-nil, got nil")
