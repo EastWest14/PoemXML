@@ -1,6 +1,9 @@
 package index
 
-import ()
+import (
+	"encoding/xml"
+	"io/ioutil"
+)
 
 const (
 	INDEX_VERSION  = "0.0"
@@ -25,8 +28,50 @@ func New(indexPath string) *Index {
 	return &Index{indexPath: indexPath}
 }
 
+func (ind *Index) LoadIndex() error {
+	data, err := ioutil.ReadFile(ind.indexPath)
+	if err != nil {
+		return err
+	}
+
+	err = ind.UnmarshalXML(data)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (ind *Index) UnmarshalXML(data []byte) error {
+	var indexParseStruct _Index
+	err := xml.Unmarshal(data, &indexParseStruct)
+
+	if err != nil {
+		return err
+	}
+
+	//fmt.Println(indexParseStruct)
+	return nil
+}
+
 func GetPoemPathById(id int) (filepath string) {
 	return ""
+}
+
+//XML Unmarshaling
+
+type _Index struct {
+	XMLName      xml.Name          `xml:"index"`
+	IndexVersion string            `xml:"index_version,attr"`
+	DateCreated  string            `xml:"date_created,attr"`
+	DateModified string            `xml:"date_modified,attr"`
+	Elements     []_IndexedElement `xml:"indexed_entity"`
+}
+
+type _IndexedElement struct {
+	XMLName xml.Name `xml:"indexed_entity"`
+	PoemId  string   `xml:"poem_id"`
+	Path    string   `xml:"path"`
 }
 
 //
