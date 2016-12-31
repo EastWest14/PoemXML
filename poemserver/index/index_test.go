@@ -19,8 +19,6 @@ func TestNew(t *testing.T) {
 	}
 }
 
-const FILEPATH_TO_INDEX_EXAMLE = "../../index_example.xml"
-
 func TestLoadIndex(t *testing.T) {
 	//Success case
 	anIndex := New(FILEPATH_TO_INDEX_EXAMLE)
@@ -29,22 +27,16 @@ func TestLoadIndex(t *testing.T) {
 	if err != nil {
 		t.Errorf(err.Error())
 	}
+	equal, message := anIndex.Equal(GetSampleIndex()) 
+	if !equal {
+		t.Errorf("Index retrieved from file doesn't equal the expected one: %s", message)
+	}
 
 	//Error case, expecting an error
 	anIndex = New("Nonexistent_filepath")
 	err = anIndex.LoadIndex()
 	if err == nil {
-		t.Errorf(err.Error())
-	}
-}
-
-func TestUnmarshalIndex(t *testing.T) {
-	const filepath = "./Fake_filepath"
-	anIndex := New(filepath)
-
-	err := anIndex.UnmarshalXML([]byte(indexExample))
-	if err != nil {
-		t.Errorf(err.Error())
+		t.Errorf("Expected error because of nonexistent file path, got no error")
 	}
 }
 
@@ -95,19 +87,3 @@ func TestUnmarshalIndex(t *testing.T) {
 		t.Errorf("Index encoded incorrectly. Expected path[1]=%s, got %s", PATH_TWO, indParsed.Elements[1].Path)
 	}
 }*/
-
-const indexExample = `<?xml version="1.0" encoding="UTF-8"?>
-<Index:index xmlns:Index="https://github.com/EastWest14/PoemXML/index_schema" index_version="0.0" date_created="" date_modified="">
-    <Index:indexed_entity>
-        <Index:poem_id>1</Index:poem_id>
-        <Index:path>./filepath</Index:path>
-    </Index:indexed_entity>
-    <Index:indexed_entity>
-        <Index:poem_id>2</Index:poem_id>
-        <Index:path>./filepath2</Index:path>
-    </Index:indexed_entity>
-    <Index:indexed_entity>
-        <Index:poem_id>3</Index:poem_id>
-        <Index:path>./filepath3</Index:path>
-    </Index:indexed_entity>
-</Index:index>`
