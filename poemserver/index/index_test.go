@@ -2,6 +2,7 @@ package index_test
 
 import (
 	. "poemXML/poemserver/index"
+	"poemXML/utils"
 	"testing"
 )
 
@@ -19,6 +20,8 @@ func TestNew(t *testing.T) {
 	}
 }
 
+const FILEPATH_TO_INVALID_INDEX = "./test_indices/invalid_ut_index.xml"
+
 func TestLoadIndex(t *testing.T) {
 	//Success case
 	anIndex := New(FILEPATH_TO_INDEX_EXAMLE)
@@ -27,16 +30,43 @@ func TestLoadIndex(t *testing.T) {
 	if err != nil {
 		t.Errorf(err.Error())
 	}
-	equal, message := anIndex.Equal(GetSampleIndex()) 
+	equal, message := anIndex.Equal(GetSampleIndex())
 	if !equal {
 		t.Errorf("Index retrieved from file doesn't equal the expected one: %s", message)
 	}
 
-	//Error case, expecting an error
+	//Error case, expecting an error - invalid index XML
+	anIndex = New(FILEPATH_TO_INVALID_INDEX)
+	err = anIndex.LoadIndex()
+	if err == nil {
+		t.Errorf("Expected error because of invalid XML, got no error")
+	}
+
+	//Error case, expecting an error - no index found
 	anIndex = New("Nonexistent_filepath")
 	err = anIndex.LoadIndex()
 	if err == nil {
 		t.Errorf("Expected error because of nonexistent file path, got no error")
+	}
+}
+
+func TestIndexAllPoemIds(t *testing.T) {
+	//Index with 3 records
+	fullIndex := GetSampleIndex()
+	allIds := fullIndex.AllPoemIds()
+	expectedListOfIds := []string{"ID_1", "ID_2", "ID_3"}
+	if !utils.SliceOfStringEqual(allIds, expectedListOfIds) {
+		t.Errorf("Expected list of ids to be %v, got %v", expectedListOfIds, allIds)
+	}
+
+	//Index with zero records
+	indexNoElements := GetSampleIndex()
+	indexNoElements.RemoveAllElements()
+
+	allIds = indexNoElements.AllPoemIds()
+	expectedListOfIds = []string{}
+	if !utils.SliceOfStringEqual(allIds, expectedListOfIds) {
+		t.Errorf("Expected list of ids to be %v, got %v", expectedListOfIds, allIds)
 	}
 }
 

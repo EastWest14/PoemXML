@@ -1,14 +1,18 @@
 package index
 
 import (
-	"testing"
 	"fmt"
+	"testing"
 )
 
 const FILEPATH_TO_INDEX_EXAMLE = "./test_indices/unit_test_index.xml"
 
 func (ind *Index) GetFilepath() (filepath string) {
 	return ind.indexPath
+}
+
+func (ind *Index) RemoveAllElements() {
+	ind.Elements = []*indexElement{}
 }
 
 func GetSampleIndex() *Index {

@@ -2,16 +2,17 @@ package index
 
 import (
 	"encoding/xml"
+	"github.com/EastWest14/gAssert"
 	"io/ioutil"
 )
 
 type Index struct {
 	indexPath string
-	Elements []*indexElement
+	Elements  []*indexElement
 }
 
 func New(indexPath string) *Index {
-	return &Index{indexPath: indexPath}
+	return &Index{indexPath: indexPath, Elements: []*indexElement{}}
 }
 
 func (ind *Index) LoadIndex() error {
@@ -28,17 +29,29 @@ func (ind *Index) LoadIndex() error {
 	return nil
 }
 
+//AllPoemIds returns the list of all the poem ids currently loaded in the index structure.
+//The index is not re-loaded from a file.
+func (ind *Index) AllPoemIds() (ids []string) {
+	gAssert.Assert(ind != nil, "Index is nil, can't get all poem ids.")
+	gAssert.Assert(ind.Elements != nil, "Index elements slice is nil, can't get all poem ids.")
+
+	ids = []string{}
+	for _, elem := range ind.Elements {
+		ids = append(ids, elem.PoemId)
+	}
+
+	return ids
+}
+
 func (ind *Index) unmarshalXML(data []byte) error {
+	gAssert.Assert(ind.Elements != nil, "Index element slice is nil, can't unmarshal XML index into it.")
+
 	var indexParseStruct _Index
 	err := xml.Unmarshal(data, &indexParseStruct)
-
 	if err != nil {
 		return err
 	}
 
-	if ind.Elements == nil {
-		ind.Elements = []*indexElement{}
-	}
 	for _, xmlElem := range indexParseStruct.Elements {
 		elem := xmlElem.convertToElement()
 		ind.Elements = append(ind.Elements, elem)
