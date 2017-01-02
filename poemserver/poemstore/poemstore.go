@@ -37,11 +37,14 @@ func (pStore *Store) GetAllPoems() (plist *poemlist.PoemList, err *errorcode.Err
 	}
 
 	listOfIds := storeIndex.AllPoemIds()
-	//TODO: Convert to real poem list
-	if len(listOfIds) != 0 {
-		return poemlist.New(), nil
+	if len(listOfIds) == 0 {
+		return nil, nil
 	}
-	return nil, nil
+
+	pList := poemlist.New()
+	pList.AddPoemIds(listOfIds)
+
+	return pList, nil
 }
 
 func (pStore *Store) GetPoemByID() (p *poem.Record, err *errorcode.Errorcode) {

@@ -2,6 +2,7 @@ package poemstore_test
 
 import (
 	"errors"
+	"poemXML/poemserver/poemlist"
 	. "poemXML/poemserver/poemstore"
 	"testing"
 )
@@ -79,9 +80,10 @@ func TestGetAllPoems(t *testing.T) {
 	if err != nil {
 		t.Errorf("Expected no error, got: %s", err.Error())
 	}
-	//TODO: list equal method
-	if list == nil {
-		t.Errorf("Expected non-nil list, got nil")
+	poemListForComparrison := poemlist.New()
+	poemListForComparrison.AddPoemIds([]string{"ID_1", "ID_2", "ID_3"})
+	if !list.Equal(poemListForComparrison) {
+		t.Errorf("Poem list filled up incorrectly")
 	}
 }
 

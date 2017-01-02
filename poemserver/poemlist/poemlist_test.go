@@ -1,9 +1,9 @@
 package poemlist_test
 
 import (
+	"fmt"
 	. "poemXML/poemserver/poemlist"
 	"poemXML/utils"
-	"strings"
 	"testing"
 )
 
@@ -45,12 +45,21 @@ func TestAddPoemIds(t *testing.T) {
 }
 
 func TestPoemListString(t *testing.T) {
-	//TODO: real test
-
+	//Empty list case
 	aPoemList := New()
 	descriptionString := aPoemList.String()
+	expectedString := fmt.Sprintf(DESCRIPTION_TEMPLATE, 0) + "\n"
+	if descriptionString != expectedString {
+		t.Errorf("Expected poem list string expected: %s, got %s", expectedString, descriptionString)
+	}
 
-	if !strings.Contains(descriptionString, INTRO_DESCRIPTION) {
-		t.Errorf("Expected string to contain substring '%s'. Got: '%s'", INTRO_DESCRIPTION, descriptionString)
+	//List with 3 elements
+	poemListManyIds := New()
+	idsToBeAdded := []string{"ID_1", "ID_2", "ID_3"}
+	poemListManyIds.AddPoemIds(idsToBeAdded)
+	descriptionString = poemListManyIds.String()
+	expectedString = fmt.Sprintf(DESCRIPTION_TEMPLATE, len(idsToBeAdded)) + "\n"
+	if descriptionString != expectedString {
+		t.Errorf("Expected poem list string expected: %s, got %s", expectedString, descriptionString)
 	}
 }

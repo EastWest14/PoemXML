@@ -11,8 +11,8 @@ func (ind *Index) GetFilepath() (filepath string) {
 	return ind.indexPath
 }
 
-func (ind *Index) RemoveAllElements() {
-	ind.Elements = []*indexElement{}
+func (ind *Index) RemoveEveryElement() {
+	ind.removeAllElements()
 }
 
 func GetSampleIndex() *Index {

@@ -52,12 +52,17 @@ func (ind *Index) unmarshalXML(data []byte) error {
 		return err
 	}
 
+	ind.removeAllElements()
 	for _, xmlElem := range indexParseStruct.Elements {
 		elem := xmlElem.convertToElement()
 		ind.Elements = append(ind.Elements, elem)
 	}
 
 	return nil
+}
+
+func (ind *Index) removeAllElements() {
+	ind.Elements = []*indexElement{}
 }
 
 func GetPoemPathById(id int) (filepath string) {

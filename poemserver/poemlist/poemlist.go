@@ -1,11 +1,13 @@
 package poemlist
 
 import (
+	"fmt"
 	"github.com/EastWest14/gAssert"
+	"poemXML/utils"
 )
 
 const (
-	INTRO_DESCRIPTION = "List of poems:"
+	DESCRIPTION_TEMPLATE = `List of poems: %d poems.`
 )
 
 type PoemList []string
@@ -25,5 +27,19 @@ func (pl *PoemList) AddPoemIds(poemIds []string) {
 }
 
 func (pl *PoemList) String() string {
-	return INTRO_DESCRIPTION + "0 poems"
+	gAssert.Assert(pl != nil, "Attempts to convert a nil poem list to string.")
+
+	numberOfIds := len(*pl)
+	return fmt.Sprintf(DESCRIPTION_TEMPLATE, numberOfIds) + "\n"
+}
+
+func (pl1 *PoemList) Equal(pl2 *PoemList) bool {
+	if pl1 == nil || pl2 == nil {
+		if pl1 == nil && pl2 == nil {
+			return true
+		}
+		return false
+	}
+
+	return utils.SliceOfStringEqual([]string(*pl1), []string(*pl2))
 }

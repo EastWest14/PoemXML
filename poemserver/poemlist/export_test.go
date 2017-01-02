@@ -1,7 +1,6 @@
 package poemlist
 
 import (
-	"poemXML/utils"
 	"testing"
 )
 
@@ -10,17 +9,6 @@ func (pl *PoemList) PoemList() (poemIds []string) {
 		panic("Nil poem list.")
 	}
 	return []string(*pl)
-}
-
-func (pl1 *PoemList) Equal(pl2 *PoemList) bool {
-	if pl1 == nil || pl2 == nil {
-		if pl1 == nil && pl2 == nil {
-			return true
-		}
-		return false
-	}
-
-	return utils.SliceOfStringEqual([]string(*pl1), []string(*pl2))
 }
 
 func TestPoemListEqual(t *testing.T) {

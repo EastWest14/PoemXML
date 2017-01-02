@@ -35,6 +35,16 @@ func TestLoadIndex(t *testing.T) {
 		t.Errorf("Index retrieved from file doesn't equal the expected one: %s", message)
 	}
 
+	//Duplicate load case
+	err = anIndex.LoadIndex()
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+	equal, message = anIndex.Equal(GetSampleIndex())
+	if !equal {
+		t.Errorf("Index retrieved from file doesn't equal the expected one: %s", message)
+	}
+
 	//Error case, expecting an error - invalid index XML
 	anIndex = New(FILEPATH_TO_INVALID_INDEX)
 	err = anIndex.LoadIndex()
@@ -61,7 +71,7 @@ func TestIndexAllPoemIds(t *testing.T) {
 
 	//Index with zero records
 	indexNoElements := GetSampleIndex()
-	indexNoElements.RemoveAllElements()
+	indexNoElements.RemoveEveryElement()
 
 	allIds = indexNoElements.AllPoemIds()
 	expectedListOfIds = []string{}
