@@ -50,7 +50,7 @@ func TestPoemListString(t *testing.T) {
 	descriptionString := aPoemList.String()
 	expectedString := fmt.Sprintf(DESCRIPTION_TEMPLATE, 0) + "\n"
 	if descriptionString != expectedString {
-		t.Errorf("Expected poem list string expected: %s, got %s", expectedString, descriptionString)
+		t.Errorf("Expected poem list string: %s, got %s", expectedString, descriptionString)
 	}
 
 	//List with 3 elements
@@ -58,8 +58,11 @@ func TestPoemListString(t *testing.T) {
 	idsToBeAdded := []string{"ID_1", "ID_2", "ID_3"}
 	poemListManyIds.AddPoemIds(idsToBeAdded)
 	descriptionString = poemListManyIds.String()
-	expectedString = fmt.Sprintf(DESCRIPTION_TEMPLATE, len(idsToBeAdded)) + "\n"
+
+	//Composing expected string
+	expectedString = fmt.Sprintf(DESCRIPTION_TEMPLATE, len(idsToBeAdded)) + "\n" + "ID_1" + "\n" + "ID_2" + "\n" + "ID_3" + "\n"
+
 	if descriptionString != expectedString {
-		t.Errorf("Expected poem list string expected: %s, got %s", expectedString, descriptionString)
+		t.Errorf("Expected poem list string: %s, \ngot: %s", expectedString, descriptionString)
 	}
 }

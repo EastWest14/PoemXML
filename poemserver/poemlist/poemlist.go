@@ -30,7 +30,12 @@ func (pl *PoemList) String() string {
 	gAssert.Assert(pl != nil, "Attempts to convert a nil poem list to string.")
 
 	numberOfIds := len(*pl)
-	return fmt.Sprintf(DESCRIPTION_TEMPLATE, numberOfIds) + "\n"
+	numberStatement := fmt.Sprintf(DESCRIPTION_TEMPLATE, numberOfIds) + "\n"
+	var idsRows string
+	for _, id := range *pl {
+		idsRows += id + "\n"
+	}
+	return numberStatement + idsRows
 }
 
 func (pl1 *PoemList) Equal(pl2 *PoemList) bool {
