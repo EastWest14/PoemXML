@@ -30,8 +30,18 @@ func (pStore *Store) Check() error {
 }
 
 func (pStore *Store) GetAllPoems() (plist *poemlist.PoemList, err *errorcode.Errorcode) {
-	//return nil, errorcode.New(INDEX_UNAVAILABLE_ERROR, "Can't find index file")
-	return poemlist.New(), nil
+	storeIndex := pStore.storeIndex
+	indLoadErr := storeIndex.LoadIndex()
+	if indLoadErr != nil {
+		return nil, errorcode.New(INDEX_UNAVAILABLE_ERROR, indLoadErr.Error())
+	}
+
+	listOfIds := storeIndex.AllPoemIds()
+	//TODO: Convert to real poem list
+	if len(listOfIds) != 0 {
+		return poemlist.New(), nil
+	}
+	return nil, nil
 }
 
 func (pStore *Store) GetPoemByID() (p *poem.Record, err *errorcode.Errorcode) {
@@ -40,6 +50,7 @@ func (pStore *Store) GetPoemByID() (p *poem.Record, err *errorcode.Errorcode) {
 
 type IndexT interface {
 	LoadIndex() error
+	AllPoemIds() (ids []string)
 }
 
 var _ IndexT = index.New("")
