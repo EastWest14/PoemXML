@@ -4,6 +4,7 @@ import (
 	"github.com/gorilla/mux"
 	"net/http"
 	"poemXML/poemserver/handlers"
+	"fmt"
 )
 
 type Server struct {
@@ -23,6 +24,7 @@ func (s *Server) SetHandlers(h *handlers.Handlers) {
 func (s *Server) Start() {
 	s.configureRouter()
 	http.Handle("/", s.router)
+	fmt.Println("Server started.")
 	http.ListenAndServe(":8080", nil)
 }
 

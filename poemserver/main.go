@@ -18,6 +18,7 @@ func main() {
 
 	poemServer := Setup(indexPath)
 
+	fmt.Println("Starting server...")
 	poemServer.Start()
 }
 
@@ -40,6 +41,8 @@ func Setup(indexPath string) *server.Server {
 
 	poemStore := poemstore.NewStore(theIndex)
 	handlers.SetPoemStore(poemStore)
+	err := poemStore.Check()
+	gAssert.Assert(err == nil, fmt.Sprintf("Poem store couldn't be loaded: %v", err))
 
 	return poemServer
 }
