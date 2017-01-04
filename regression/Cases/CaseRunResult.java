@@ -3,11 +3,11 @@ package Cases;
 public final class CaseRunResult {
 	private boolean passes;
 
-	CaseRunResult() {
+	public CaseRunResult() {
 		this.passes = false;
 	}
 
-	CaseRunResult(boolean passes) {
+	public CaseRunResult(boolean passes) {
 		this.passes = passes;
 	}
 
