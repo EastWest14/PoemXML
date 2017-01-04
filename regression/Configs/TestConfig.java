@@ -3,6 +3,7 @@ package Configs;
 public final class TestConfig {
 	public static void main(String args[]) throws Exception {
 		boolean testPass = true;
+		
 		try {
 			final String initialServerUrl = "Initial server URL";
 			Config aConfig = new Config(initialServerUrl);
