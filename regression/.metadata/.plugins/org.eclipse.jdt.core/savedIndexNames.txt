@@ -1,0 +1,4 @@
+INDEX VERSION 1.127+/Users/iOS_Coder/gocode/src/poemXML/regression/.metadata/.plugins/org.eclipse.jdt.core
+294432728.index
+3616444177.index
+4274028564.index

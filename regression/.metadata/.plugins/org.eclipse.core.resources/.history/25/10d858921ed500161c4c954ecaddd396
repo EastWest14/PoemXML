@@ -1,0 +1,42 @@
+package Cases;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class GroupRunResultTest {
+
+	@Test
+	public void test() {
+		boolean testPass = true;
+
+		GroupRunResult grRunResultDefault = new GroupRunResult();
+		GroupRunResult grRunResultPasses = new GroupRunResult(true);
+		GroupRunResult grRunResultFails = new GroupRunResult(false);
+
+		assertEquals(grRunResultDefault.passes(), false);
+	
+		assertEquals(grRunResultPasses.passes(), true);
+
+		assertEquals(grRunResultFails.passes(), false);
+
+		grRunResultFails.setPasses(true);
+		passes = grRunResultPasses.passes();
+		if (!passes) {
+			System.out.println("Test fail: Expected group run result to be reset to true, got false.");
+			testPass = false;
+		}
+
+		grRunResultFails.setPasses(false);
+		passes = grRunResultPasses.passes();
+		if (!passes) {
+			System.out.println("Test fail: Expected group run result to be reset to false, got true.");
+			testPass = false;
+		}
+
+		if (testPass) {
+			System.out.println("Test Pass");
+		}
+	}
+
+}

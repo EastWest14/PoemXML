@@ -1,0 +1,17 @@
+package Cases.AlwaysPassGroup;
+
+import Cases.*;
+import java.util.ArrayList;
+
+public final class AlwaysPassGroup implements RegressionGroup {
+	private RegressionTestCase listOfCases[];
+	
+	AlwaysPassGroup() {
+		List<RegressionTestCase> listOfCases = new ArrayList<RegressionTestCase>();
+		this.listOfCases = 
+	}
+	
+	public GroupRunResult execute() {
+		return null;
+	}
+}

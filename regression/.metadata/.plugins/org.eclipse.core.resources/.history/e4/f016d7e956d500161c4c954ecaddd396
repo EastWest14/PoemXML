@@ -1,0 +1,7 @@
+package Cases;
+
+import Configs.Config;
+
+public interface RegressionGroup {
+	RegressionGroup()
+}
