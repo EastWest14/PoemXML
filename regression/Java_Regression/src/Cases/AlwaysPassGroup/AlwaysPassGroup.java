@@ -12,12 +12,6 @@ public final class AlwaysPassGroup implements RegressionGroup {
 	}
 	
 	public GroupRunResult execute() {
-		for (RegressionTestCase rCase: listOfCases) {
-			CaseRunResult result = rCase.run();
-			if (!result.passes()) {
-				return new GroupRunResult(false);
-			}
-		}
-		return new GroupRunResult(true);
+		return CaseRunner.execute(this.listOfCases);
 	}
 }

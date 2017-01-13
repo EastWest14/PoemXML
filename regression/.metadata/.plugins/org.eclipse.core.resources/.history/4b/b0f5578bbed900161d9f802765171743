@@ -1,0 +1,19 @@
+package Cases;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class CaseRunnerTest {
+
+	@Test
+	public void test() {
+		RegressionTestCase[] casesPass = new RegressionTestCase[2];
+		RegressionTestCase passCase = new AlwaysPassCase(); 
+		cases[0] = passCase;
+		
+		GroupRunResult resultShouldPass = CaseRunner.execute(cases); 
+		assertEquals(resultShouldPass.passes(), true);
+	}
+
+}

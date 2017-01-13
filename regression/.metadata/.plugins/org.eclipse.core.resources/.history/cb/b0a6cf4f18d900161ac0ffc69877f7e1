@@ -1,0 +1,7 @@
+package Cases;
+
+public class CaseRunner {
+	public GroupRunResult execute() {
+		return null;
+	}
+}
