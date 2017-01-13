@@ -1,7 +1,0 @@
-package Cases;
-
-public class AlwaysFailCase {
-	public CaseRunResult run() {
-		return new CaseRunResult(true);
-	}
-}

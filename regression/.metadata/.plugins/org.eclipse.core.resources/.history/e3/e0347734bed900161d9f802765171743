@@ -1,7 +1,0 @@
-package Cases;
-
-public class AlwaysFailCase RegressionTestCase {
-	public CaseRunResult run() {
-		return new CaseRunResult(false);
-	}
-}

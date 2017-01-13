@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;Java_Regression/src/Cases/CaseRunResultTest2.java&apos; to &apos;CaseRunResultTest.java&apos;" description="Rename resource &apos;CaseRunResultTest2.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/Cases/CaseRunResultTest2.java" name="CaseRunResultTest.java" stamp="1483820420193" updateReferences="true"/>
-</session>

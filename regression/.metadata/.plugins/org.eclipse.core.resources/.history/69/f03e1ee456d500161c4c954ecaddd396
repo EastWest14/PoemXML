@@ -1,7 +1,0 @@
-package Cases;
-
-import Config.*;
-
-public interface RegressionGroup {
-	RegressionGroup()
-}

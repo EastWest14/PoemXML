@@ -1,7 +1,0 @@
-package Cases;
-
-public class CaseRunner {
-	public static GroupRunResult execute(RegressionTestCase[] cases) {
-		return new GroupRunResult(false);
-	}
-}

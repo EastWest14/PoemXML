@@ -1,9 +1,0 @@
-package Cases.AlwaysPassGroup;
-
-import Cases.*;
-
-public final class AlwaysPassGroup implements RegressionGroup {
-	GroupRunResult execute() {
-		return null;
-	}
-}
