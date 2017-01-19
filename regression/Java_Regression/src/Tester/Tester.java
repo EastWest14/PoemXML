@@ -37,7 +37,7 @@ public class Tester {
 			System.out.println("Regression suit passed!");
 			System.out.println("Number of cases run: " + numGrRunned);
 			System.out.println("===");
-			return;
+			System.exit(0);
 		}
 		
 		System.out.println("xxx");
@@ -45,5 +45,6 @@ public class Tester {
 		System.out.println("Number of cases run: " + numGrRunned);
 		System.out.println("Number of groups failed: " + numFailedGroups);
 		System.out.println("xxx");
+		System.exit(1);
 	}
 }

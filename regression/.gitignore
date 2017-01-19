@@ -1,3 +1,6 @@
 *.class
 .recommenders
 .metadata
+.DS_Store
+Java_Regression/src/.project
+Java_Regression/.DS_Store

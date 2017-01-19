@@ -1,15 +1,13 @@
 package Tester;
 
 import Cases.*;
-import Cases.AlwaysPassGroup.*;
-import Cases.AlwaysFailGroup.*;
+import Cases.SmokeGroup.*;
 
 public class GroupStore {
 	private RegressionGroup groupsAvailable[]; 
 	GroupStore() {
-		this.groupsAvailable = new RegressionGroup[2];
-		this.groupsAvailable[0] = new AlwaysPassGroup();
-		this.groupsAvailable[1] = new AlwaysFailGroup();
+		this.groupsAvailable = new RegressionGroup[1];
+		this.groupsAvailable[0] = new SmokeGroup();
 	}
 	
 	public RegressionGroup[] allGroups() {
