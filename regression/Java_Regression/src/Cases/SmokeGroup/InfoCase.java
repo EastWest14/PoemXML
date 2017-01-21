@@ -1,16 +1,27 @@
 package Cases.SmokeGroup;
 
 import Cases.*;
+import Configs.Config;
+
 import java.net.*;
 import java.util.Objects;
 import java.io.*;
 
 
 public class InfoCase implements RegressionTestCase {
-	public CaseRunResult run() {
+	private Config regressionConfig;
+	
+	public InfoCase(Config regressionConfig) {
+		this.regressionConfig = regressionConfig;
+	}
+	
+	public CaseRunResult run() throws NullPointerException {
 		URL url = null;
 		try {
-			url = new URL("http://localhost:8080/poems");
+			url = new URL(this.regressionConfig + "/poems");
+		} catch(NullPointerException e) {
+			System.out.println("here");
+			throw e;
 		} catch(Exception e) {
 			System.out.println("Unknown exception when building the URL: " + e);
 		}

@@ -7,7 +7,7 @@ public final class Config {
 		throw new Exception("Initializer disabled");
 	}
 
-	Config(String serverUrl) {
+	public Config(String serverUrl) {
 		this.serverUrl = serverUrl;
 	}
 

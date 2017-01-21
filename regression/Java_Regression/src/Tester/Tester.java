@@ -1,10 +1,13 @@
 package Tester;
 
 import Cases.*;
+import Configs.*;
 
 public class Tester {
 	public static void main(String[] args) {
-		GroupStore store = new GroupStore();
+		Config regressionConfig = new Config("http://localhost:8080");
+		
+		GroupStore store = new GroupStore(regressionConfig);
 		RegressionGroup allGroups[] = store.allGroups();
 		GroupRunResult runResults[] = runGroups(allGroups);
 		outputResultsToConsole(runResults);
