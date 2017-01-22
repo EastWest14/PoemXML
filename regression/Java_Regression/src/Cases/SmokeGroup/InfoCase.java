@@ -18,7 +18,7 @@ public class InfoCase implements RegressionTestCase {
 	public CaseRunResult run() throws NullPointerException {
 		URL url = null;
 		try {
-			url = new URL(this.regressionConfig + "/poems");
+			url = new URL(this.regressionConfig.ServerUrl() + "/poems");
 		} catch(NullPointerException e) {
 			System.out.println("here");
 			throw e;
@@ -41,8 +41,3 @@ public class InfoCase implements RegressionTestCase {
 		return new CaseRunResult(true);
 	}
 }
-
-//You can make use of java.net.URL and/or java.net.URLConnection.
-
-
-
