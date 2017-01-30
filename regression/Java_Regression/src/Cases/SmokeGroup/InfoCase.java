@@ -29,7 +29,6 @@ public class InfoCase implements RegressionTestCase {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
 		    for (String line; (line = reader.readLine()) != null;) {
 		        if (!Objects.equals(line, "Hello, world!")) {
-		        	System.out.println("Fail: " + line);
 		        	return new CaseRunResult(false);
 		        }
 		    }
@@ -37,7 +36,6 @@ public class InfoCase implements RegressionTestCase {
 			System.out.println("Unknown exception: " + e);
 		}
 		
-		System.out.println("Pass");
 		return new CaseRunResult(true);
 	}
 }
