@@ -8,11 +8,8 @@ public class GroupRunResultTest {
 
 	@Test
 	public void test() {
-		GroupRunResult grRunResultDefault = new GroupRunResult();
 		GroupRunResult grRunResultPasses = new GroupRunResult(true);
 		GroupRunResult grRunResultFails = new GroupRunResult(false);
-
-		assertEquals(grRunResultDefault.passes(), false);
 	
 		assertEquals(grRunResultPasses.passes(), true);
 

@@ -6,14 +6,10 @@ import org.junit.Test;
 public class CaseRunResultTest {
 	@Test
 	public void test() {
-		CaseRunResult caseRunResultDefault = new CaseRunResult();
 		CaseRunResult caseRunResultPasses = new CaseRunResult(true);
 		CaseRunResult caseRunResultFails = new CaseRunResult(false);
 
-		boolean passes = caseRunResultDefault.passes();
-		assertEquals(passes, false);
-
-		passes = caseRunResultPasses.passes();
+		boolean passes = caseRunResultPasses.passes();
 		assertEquals(passes, true);
 		
 		passes = caseRunResultFails.passes();

@@ -27,16 +27,36 @@ public class Tester {
 		boolean regressionSuitPasses = true;
 		int numGrRunned = 0;
 		int numFailedGroups = 0;
+		
+		System.out.println("===");
+		//Run, List groups one by one with pass messages and error messages
 		for (GroupRunResult result: results) {
 			numGrRunned++;
-			if (!result.passes()) {
+			boolean passes = result.passes();
+			if (!passes) {
 				numFailedGroups++;
 				regressionSuitPasses = false;
 			}
+			System.out.println("Group" + result.groupName() + "result: " + passes);
 		}
 		
 		if (regressionSuitPasses) {
-			System.out.println("===");
+			System.out.println("Regression suit passed!");
+		} else {
+			System.out.println("Regression suit failed!");
+		}
+		System.out.println("Number of cases run: " + numGrRunned);
+		System.out.println("Number of groups failed: " + numFailedGroups);
+		System.out.println("===");
+		
+		if (regressionSuitPasses) {
+			System.exit(0);
+		} else {
+			System.exit(1);
+		}
+		
+		/*if (regressionSuitPasses) {
+			
 			System.out.println("Regression suit passed!");
 			System.out.println("Number of cases run: " + numGrRunned);
 			System.out.println("===");
@@ -48,6 +68,6 @@ public class Tester {
 		System.out.println("Number of cases run: " + numGrRunned);
 		System.out.println("Number of groups failed: " + numFailedGroups);
 		System.out.println("xxx");
-		System.exit(1);
+		System.exit(1);*/
 	}
 }

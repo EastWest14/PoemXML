@@ -2,13 +2,19 @@ package Cases;
 
 public final class CaseRunResult {
 	private boolean passes;
+	private String failMessage;
 
-	public CaseRunResult() {
+	private CaseRunResult() {
 		this.passes = false;
 	}
 
 	public CaseRunResult(boolean passes) {
 		this.passes = passes;
+	}
+	
+	public CaseRunResult(boolean passes, String failMessage) {
+		this.passes = passes;
+		this.failMessage = failMessage;
 	}
 
 	public boolean passes() {
@@ -16,5 +22,9 @@ public final class CaseRunResult {
 	}
 	public void setPasses(boolean passes) {
 		this.passes = passes;
+	}
+	
+	public String failMessage() {
+		return this.failMessage;
 	}
 }
