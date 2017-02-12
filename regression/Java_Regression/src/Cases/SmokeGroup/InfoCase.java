@@ -34,6 +34,7 @@ public class InfoCase implements RegressionTestCase {
 		    }
 		} catch (Exception e) {
 			System.out.println("Unknown exception: " + e);
+			return new CaseRunResult(false);
 		}
 		
 		return new CaseRunResult(true);
