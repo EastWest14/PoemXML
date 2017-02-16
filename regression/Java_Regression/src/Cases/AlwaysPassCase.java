@@ -2,6 +2,6 @@ package Cases;
 
 public class AlwaysPassCase implements RegressionTestCase {
 	public CaseRunResult run() {
-		return new CaseRunResult(true);
+		return new CaseRunResult(true, "Always Pass Case", "");
 	}
 }

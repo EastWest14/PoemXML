@@ -10,6 +10,8 @@ import java.io.*;
 
 public class InfoCase implements RegressionTestCase {
 	private Config regressionConfig;
+	private static String caseName = "Info Case";
+	private static String expectedLine = "Hello, world!";
 	
 	public InfoCase(Config regressionConfig) {
 		this.regressionConfig = regressionConfig;
@@ -27,15 +29,15 @@ public class InfoCase implements RegressionTestCase {
 		
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
 		    for (String line; (line = reader.readLine()) != null;) {
-		        if (!Objects.equals(line, "Hello, world!")) {
-		        	return new CaseRunResult(false);
+		        if (!Objects.equals(line, expectedLine)) {
+		        	return new CaseRunResult(false, caseName, "Expected line: " + expectedLine + " got: " + line);
 		        }
 		    }
 		} catch (Exception e) {
 			System.out.println("Unknown exception: " + e);
-			return new CaseRunResult(false);
+			return new CaseRunResult(false, caseName, "Unknown exception: " + e);
 		}
 		
-		return new CaseRunResult(true);
+		return new CaseRunResult(true, caseName, "");
 	}
 }

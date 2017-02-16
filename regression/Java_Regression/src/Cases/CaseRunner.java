@@ -9,7 +9,7 @@ public class CaseRunner {
 			CaseRunResult result = aCase.run();
 			if (!result.passes()) {
 				passes = false;
-				failMessage += result.failMessage() + "\n";
+				failMessage += "\t{" + result.caseName() + ":  " + result.failMessage() + "}\n";
 			}
 		}
 		

@@ -38,6 +38,10 @@ public class Tester {
 				regressionSuitPasses = false;
 			}
 			System.out.println("\"" + result.groupName() + "\": " + passes);
+			if (!passes) {
+				System.out.println("\tCase error messages:");
+				System.out.println(result.failMessage());
+			}
 		}
 		System.out.println("");
 		

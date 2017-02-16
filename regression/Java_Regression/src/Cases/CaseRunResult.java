@@ -2,18 +2,20 @@ package Cases;
 
 public final class CaseRunResult {
 	private boolean passes;
+	private String caseName;
 	private String failMessage;
 
 	private CaseRunResult() {
 		this.passes = false;
 	}
 
-	public CaseRunResult(boolean passes) {
+	private CaseRunResult(boolean passes) {
 		this.passes = passes;
 	}
 	
-	public CaseRunResult(boolean passes, String failMessage) {
+	public CaseRunResult(boolean passes, String caseName, String failMessage) {
 		this.passes = passes;
+		this.caseName = caseName;
 		this.failMessage = failMessage;
 	}
 
@@ -22,6 +24,10 @@ public final class CaseRunResult {
 	}
 	public void setPasses(boolean passes) {
 		this.passes = passes;
+	}
+	
+	public String caseName() {
+		return this.caseName;
 	}
 	
 	public String failMessage() {

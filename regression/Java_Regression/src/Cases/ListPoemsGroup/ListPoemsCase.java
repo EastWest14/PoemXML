@@ -10,6 +10,7 @@ import java.io.*;
 
 public class ListPoemsCase implements RegressionTestCase {
 	private Config regressionConfig;
+	private static String caseName = "List Poems Case";
 	
 	private final String expectedResponse = "List of poems: 3 poems.\nID_1\nID_2\nID_3\n";
 	
@@ -30,13 +31,13 @@ public class ListPoemsCase implements RegressionTestCase {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
 		    for (String line; (line = reader.readLine()) != null;) {
 		        if (!Objects.equals(line, expectedResponse)) {
-		        	return new CaseRunResult(false);
+		        	return new CaseRunResult(false, caseName, "Expected: " + expectedResponse + " got: " + line);
 		        }
 		    }
 		} catch (Exception e) {
 			System.out.println("Unknown exception: " + e);
 		}
 		
-		return new CaseRunResult(true);
+		return new CaseRunResult(true, caseName, "");
 	}
 }
