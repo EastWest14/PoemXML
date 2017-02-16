@@ -5,6 +5,7 @@ import Configs.Config;
 
 public class ListPoemsGroup implements RegressionGroup {
 	private RegressionTestCase listOfCases[];
+	private static String groupName = "List Poems Group";
 	
 	public ListPoemsGroup(Config regressionConfig) {
 		RegressionTestCase listOfCases[] = new RegressionTestCase[1];
@@ -13,6 +14,6 @@ public class ListPoemsGroup implements RegressionGroup {
 	}
 	
 	public GroupRunResult execute() {
-		return CaseRunner.execute(this.listOfCases);
+		return CaseRunner.execute(groupName, this.listOfCases);
 	}
 }

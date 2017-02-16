@@ -3,6 +3,7 @@ package Cases.AlwaysFailGroup;
 import Cases.*;
 
 public final class AlwaysFailGroup implements RegressionGroup {
+	private static String groupName = "Always Fail Group";
 	private RegressionTestCase listOfCases[];
 	
 	public AlwaysFailGroup() {
@@ -12,6 +13,6 @@ public final class AlwaysFailGroup implements RegressionGroup {
 	}
 	
 	public GroupRunResult execute() {
-		return CaseRunner.execute(this.listOfCases);
+		return CaseRunner.execute(groupName, this.listOfCases);
 	}
 }

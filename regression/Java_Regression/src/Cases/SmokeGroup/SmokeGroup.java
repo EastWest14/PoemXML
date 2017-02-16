@@ -5,6 +5,7 @@ import Configs.Config;
 
 public final class SmokeGroup implements RegressionGroup {
 	private RegressionTestCase listOfCases[];
+	private static String groupName = "Smoke Group";
 	
 	public SmokeGroup(Config regressionConfig) {
 		RegressionTestCase listOfCases[] = new RegressionTestCase[1];
@@ -13,6 +14,6 @@ public final class SmokeGroup implements RegressionGroup {
 	}
 	
 	public GroupRunResult execute() {
-		return CaseRunner.execute(this.listOfCases);
+		return CaseRunner.execute(groupName, this.listOfCases);
 	}
 }

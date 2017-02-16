@@ -37,8 +37,9 @@ public class Tester {
 				numFailedGroups++;
 				regressionSuitPasses = false;
 			}
-			System.out.println("Group" + result.groupName() + "result: " + passes);
+			System.out.println("\"" + result.groupName() + "\": " + passes);
 		}
+		System.out.println("");
 		
 		if (regressionSuitPasses) {
 			System.out.println("Regression suit passed!");

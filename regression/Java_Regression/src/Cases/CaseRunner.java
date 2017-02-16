@@ -1,7 +1,7 @@
 package Cases;
 
 public class CaseRunner {
-	public static GroupRunResult execute(RegressionTestCase[] cases) {
+	public static GroupRunResult execute(String groupName, RegressionTestCase[] cases) {
 		boolean passes = true;
 		String failMessage = "";
 		
@@ -13,6 +13,6 @@ public class CaseRunner {
 			}
 		}
 		
-		return new GroupRunResult("***", passes, failMessage);
+		return new GroupRunResult(groupName, passes, failMessage);
 	}
 }

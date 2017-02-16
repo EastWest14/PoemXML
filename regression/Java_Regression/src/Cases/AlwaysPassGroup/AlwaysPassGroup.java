@@ -4,6 +4,7 @@ import Cases.*;
 
 public final class AlwaysPassGroup implements RegressionGroup {
 	private RegressionTestCase listOfCases[];
+	private static String groupName = "Always Pass Group";
 	
 	public AlwaysPassGroup() {
 		RegressionTestCase listOfCases[] = new RegressionTestCase[1];
@@ -12,6 +13,6 @@ public final class AlwaysPassGroup implements RegressionGroup {
 	}
 	
 	public GroupRunResult execute() {
-		return CaseRunner.execute(this.listOfCases);
+		return CaseRunner.execute(groupName, this.listOfCases);
 	}
 }
