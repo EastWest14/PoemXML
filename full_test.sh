@@ -20,6 +20,15 @@ echo '===================================='
 echo ''
 
 echo '===================================='
+echo 'Recompiling Regression Suit:'
+
+echo 'Regression Recompiled Succesfully'
+echo '===================================='
+echo ''
+set -e
+./recompile_regression.sh
+set +e
+echo '===================================='
 echo 'Preparing the index directory copy:'
 set -e
 original_regression_index_path="./poemserver/index/test_indices/regression_test_index/*"
@@ -80,4 +89,4 @@ echo '`index regression copy removed'
 echo '===================================='
 echo ''
 
-echo '###ALL TESTS PASS###'
+echo '###REGRESSION RUN COMPLETE###'
