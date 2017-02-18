@@ -35,7 +35,7 @@ original_regression_index_path="./poemserver/index/test_indices/regression_test_
 
 namebase="index_workcopy_"
 datepart=$(date +%s%N)
-new_dir_name="$namebase$datepart"
+new_dir_name="$XXXnamebase$datepartXXX"
 
 temp_index_dir=$(mktemp -d $new_dir_name)
 cp -R $original_regression_index_path $temp_index_dir
