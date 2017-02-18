@@ -35,7 +35,7 @@ original_regression_index_path="./poemserver/index/test_indices/regression_test_
 
 namebase="index_workcopy_"
 datepart=$(date +%s%N)
-new_dir_name="$XXXnamebase$datepartXXX"
+new_dir_name="XXX$namebase$datepartXXX"
 
 temp_index_dir=$(mktemp -d $new_dir_name)
 cp -R $original_regression_index_path $temp_index_dir
@@ -71,6 +71,7 @@ echo 'Shutting down the server:'
 set -e
 echo 'Process ID: ' $ID
 kill $ID
+sleep 1
 set +e
 echo 'Server Shut Down'
 echo '===================================='
@@ -81,10 +82,10 @@ echo 'Removing index regression copy:'
 set -e
 cd $temp_index_dir -> /dev/null
 rm *
-cd -
+cd - -> /dev/null
 rmdir $temp_index_dir
 set +e
-echo '`index regression copy removed'
+echo 'Index regression copy removed'
 echo '===================================='
 echo ''
 
