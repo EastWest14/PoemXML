@@ -20,7 +20,7 @@ public class InfoCase implements RegressionTestCase {
 	public CaseRunResult run() throws NullPointerException {
 		URL url = null;
 		try {
-			url = new URL(this.regressionConfig.ServerUrl() + "/poems");
+			url = new URL(this.regressionConfig.ServerUrl() + "/");
 		} catch(NullPointerException e) {
 			throw e;
 		} catch(Exception e) {

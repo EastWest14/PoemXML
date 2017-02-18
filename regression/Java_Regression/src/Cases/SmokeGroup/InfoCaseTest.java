@@ -16,7 +16,7 @@ public class InfoCaseTest {
 		SimpleHTTPServer mockServer = null;
 		try {
 			String responses[] = {"Hello, world!", "Wrong_response"};
-			mockServer = new SimpleHTTPServer("/poems", responses);
+			mockServer = new SimpleHTTPServer("/", responses);
 		} catch(Exception e) {
 			fail("Error creating server");
 		}

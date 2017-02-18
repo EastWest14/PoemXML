@@ -34,12 +34,18 @@ func (h *Handlers) SetPoemStore(store PoemStoreT) {
 const STANDARD_RESPONSE = "Hello, world!"
 
 func (h *Handlers) DefaultHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
+
 	fmt.Fprint(w, STANDARD_RESPONSE)
 }
 
 func (h *Handlers) PoemListHandler(w http.ResponseWriter, r *http.Request) {
 	gAssert.AssertHard(h != nil, "Handlers structure is nil")
 	gAssert.AssertHard(h.poemStore != nil, "PoemStore is nil")
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
 
 	listOfAllPoems, err := h.poemStore.GetAllPoems()
 	if err == nil {

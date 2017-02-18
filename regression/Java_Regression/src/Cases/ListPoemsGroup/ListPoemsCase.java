@@ -21,7 +21,7 @@ public class ListPoemsCase implements RegressionTestCase {
 	public CaseRunResult run() throws NullPointerException {
 		URL url = null;
 		try {
-			url = new URL(this.regressionConfig.ServerUrl() + "/poems/list");
+			url = new URL(this.regressionConfig.ServerUrl() + "/poems");
 		} catch(NullPointerException e) {
 			throw e;
 		} catch(Exception e) {
