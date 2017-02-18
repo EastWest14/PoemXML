@@ -12,7 +12,7 @@ public class ListPoemsCase implements RegressionTestCase {
 	private Config regressionConfig;
 	private static String caseName = "List Poems Case";
 	
-	private final String expectedResponse = "List of poems: 3 poems.\nID_1\nID_2\nID_3\n";
+	private final String[] expectedResponses = {"List of poems: 3 poems.", "ID_1", "ID_2", "ID_3"};
 	
 	public ListPoemsCase(Config regressionConfig) {
 		this.regressionConfig = regressionConfig;
@@ -29,10 +29,20 @@ public class ListPoemsCase implements RegressionTestCase {
 		}
 		
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
+			int expectedNumberOfLines = expectedResponses.length;
+			int currentExpectedLine = 0;
+
 		    for (String line; (line = reader.readLine()) != null;) {
-		        if (!Objects.equals(line, expectedResponse)) {
-		        	return new CaseRunResult(false, caseName, "Expected: " + expectedResponse + " got: " + line);
+		    	if (currentExpectedLine >= expectedNumberOfLines) {
+		    		return new CaseRunResult(false, caseName, "Expected " + expectedNumberOfLines + " lines, got more than that.");
+		    	}
+
+		    	String expectedLine = expectedResponses[currentExpectedLine];
+
+		        if (!Objects.equals(line, expectedLine)) {
+		        	return new CaseRunResult(false, caseName, "Expected: " + expectedLine + " got: " + line);
 		        }
+		        currentExpectedLine++;
 		    }
 		} catch (Exception e) {
 			System.out.println("Unknown exception: " + e);
