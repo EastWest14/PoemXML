@@ -59,11 +59,10 @@ echo ''
 
 echo '===================================='
 echo 'Launching Regression suit:'
-cd regression/Java_Regression/src
+cd regression/Java_Regression/src -> /dev/null
 sleep 1
 java Tester.Tester
-cd -
-echo 'Regression Suit Passes'
+cd - -> /dev/null
 echo '===================================='
 echo ''
 
@@ -80,7 +79,7 @@ echo ''
 echo '===================================='
 echo 'Removing index regression copy:'
 set -e
-cd $temp_index_dir
+cd $temp_index_dir -> /dev/null
 rm *
 cd -
 rmdir $temp_index_dir
