@@ -5,7 +5,7 @@ import Configs.*;
 
 public class Tester {
 	public static void main(String[] args) {
-		Config regressionConfig = new Config("http://localhost:8080");
+		Config regressionConfig = new Config("http://localhost:8183");
 		
 		GroupStore store = new GroupStore(regressionConfig);
 		RegressionGroup allGroups[] = store.allGroups();

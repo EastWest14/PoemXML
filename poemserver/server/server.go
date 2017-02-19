@@ -25,7 +25,11 @@ func (s *Server) Start() {
 	s.configureRouter()
 	http.Handle("/", s.router)
 	fmt.Println("Server started.")
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8183", nil)
+	if err != nil {
+		fmt.Println("Server error: " + err.Error())
+		panic(err.Error())
+	}
 }
 
 func (s *Server) configureRouter() {
