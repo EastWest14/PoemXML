@@ -14,6 +14,10 @@ then
         exit 1
 fi
 
+DB_NAME='Hello'
+DB_STARTUP_SCRIPT='CREATE DATABASE Hello;'
+DB_REMOVE_SCRIPT='DROP DATABASE Hello;'
+
 if [ $OSTYPE = 'linux-gnu' ]
 then
 	echo 'Running on Linux OS. Assuming EC2 environment.'
@@ -24,7 +28,19 @@ then
         	exit 1
 	fi
 	mysql -h$DB_HOST -u$DB_USER -p$DB_PASSWORD -e "show databases;"
+
+	set -e
+        echo $DB_STARTUP_SCRIPT | mysql -h$DB_HOST -u $DB_USER -p$DB_PASSWORD
+        cat pet_db.sql | mysql -h$DB_HOST -u $DB_USER -p$DB_PASSWORD $DB_NAME
+        echo 'Database exists!'
+        echo $DB_REMOVE_SCRIPT | mysql -h$DB_HOST -u$DB_USER -p$DB_PASSWORD $DB_NAME
+        set +e
 else 
 	echo 'Running on a non-Linux OS. Assuming local environment.'
-	mysql -u$DB_USER -p$DB_PASSWORD -e "show databases;"
+	set -e
+	echo $DB_STARTUP_SCRIPT | mysql -u $DB_USER -p$DB_PASSWORD
+	cat pet_db.sql | mysql -u $DB_USER -p$DB_PASSWORD $DB_NAME
+	echo 'Database exists!'
+	echo $DB_REMOVE_SCRIPT | mysql -u $DB_USER -p$DB_PASSWORD $DB_NAME
+	set +e
 fi
