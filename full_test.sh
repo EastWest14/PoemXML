@@ -49,7 +49,7 @@ echo 'Launching the Server:'
 set -e
 index_name="regression_test_index.xml"
 path_to_index_xml="$temp_index_dir/$index_name"
-./main $path_to_index_xml &
+./main $path_to_index_xml $DB_HOST $DB_USER $DB_NAME $DB_PASSWORD &
 ID=$!;
 set +e
 sleep 2

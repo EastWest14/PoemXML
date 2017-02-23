@@ -10,7 +10,7 @@ echo ''
 
 echo '===================================='
 echo 'Launching the Server:'
-./main 'poemserver/index/test_indices/local_launch_index/local_launch_index.xml' &
+./main 'poemserver/index/test_indices/local_launch_index/local_launch_index.xml' $DB_HOST $DB_USER $DB_NAME $DB_PASSWORD &
 ID=$!;
 sleep 2
 echo 'Server Launched'
