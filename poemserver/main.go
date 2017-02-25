@@ -4,8 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"github.com/EastWest14/gAssert"
-	"github.com/ziutek/mymysql/mysql"
-	_ "github.com/ziutek/mymysql/native"
 	"poemXML/poemserver/database"
 	"poemXML/poemserver/handlers"
 	"poemXML/poemserver/index"
@@ -16,16 +14,22 @@ import (
 var poemServer *server.Server
 
 func main() {
-	indexPath := ExtractEnvVariables()
-	fmt.Printf("Index path: %s\n", indexPath)
+	indexPath, dbConfig := ExtractDBConfig()
 
+	_, err := database.NewConnectedDB(dbConfig)
+	if err != nil {
+		fmt.Println("Error launching DB.")
+		panic(err.Error())
+	}
+
+	fmt.Printf("Index path: %s\n", indexPath) //Deprecated
 	poemServer := Setup(indexPath)
 
 	fmt.Println("Starting server...")
 	poemServer.Start()
 }
 
-func ExtractEnvVariables() string {
+func ExtractDBConfig() (indexPath string, dbConfig *database.DBConfig) {
 	flag.Parse()
 	numArgs := flag.NArg()
 	gAssert.AssertHard(numArgs > 0, "Number of command line arguments is 0 - can't extract index path.")
@@ -36,30 +40,10 @@ func ExtractEnvVariables() string {
 	dbUser := flag.Arg(2)
 	dbName := flag.Arg(3)
 	dbPassword := flag.Arg(4)
-	//dbPort := 3306
 
-	db := mysql.New("tcp", "", host+":3306", dbUser, dbPassword, dbName)
+	dbConfig = database.NewDBConfig(host, dbUser, dbName, dbPassword)
 
-	err := db.Connect()
-	if err != nil {
-		panic(err)
-	}
-
-	rows, _, err := db.Query("select * from pet")
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Printf("In table Pet %d rows.", len(rows))
-
-	//fmt.Println(flag.Arg(1))
-	//fmt.Println(flag.Arg(2))
-	//fmt.Println(flag.Arg(3))
-	//fmt.Println(flag.Arg(4))
-
-	fmt.Println(database.CreateMySqlString())
-
-	return flag.Arg(0)
+	return flag.Arg(0), dbConfig
 }
 
 func Setup(indexPath string) *server.Server {
