@@ -37,7 +37,6 @@ func NewConnectedDB(config *DBConfig) (db *Database, err error) {
 	}
 
 	connection := mysql.New("tcp", "", config.host+":"+PORT, config.user, config.dbPassword, config.dbName)
-
 	err = connection.Connect()
 	if err != nil {
 		return nil, err
