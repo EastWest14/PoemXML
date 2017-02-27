@@ -21,13 +21,14 @@ echo ''
 
 echo '===================================='
 echo 'Recompiling Regression Suit:'
-
-echo 'Regression Recompiled Succesfully'
-echo '===================================='
-echo ''
 set -e
 ./recompile_regression.sh
 set +e
+echo 'Regression Recompiled Succesfully'
+echo '===================================='
+echo ''
+
+
 echo '===================================='
 echo 'Preparing the index directory copy:'
 set -e
@@ -44,6 +45,43 @@ echo 'Index Directory Copy Created'
 echo '===================================='
 echo ''
 
+
+
+echo 'Creating Regression DB:'
+echo '===================================='
+echo ''
+if ! [ $DB_USER ]
+then
+        echo 'DB_USER environment variable not set will not be able to connect to DB.'
+        echo 'Set DB_USER environment variable and preferable put it in a script, for example set_env_var.sh.'
+        exit 1
+fi
+if ! [ $DB_PASSWORD ]
+then
+        echo 'DB_PASSWORD environment variable not set will not be able to connect to DB.'
+        echo 'Set DB_PASSWORD environment variable and preferable put it in a script, for example set_env_var.sh.'
+        exit 1
+fi
+
+export DB_NAME='Hello'
+DB_STARTUP_SCRIPT="CREATE DATABASE $DB_NAME;"
+DB_REMOVE_SCRIPT="DROP DATABASE $DB_NAME;"
+if ! [ $DB_HOST ]
+then
+  	echo 'DB_HOST environment variable not set will not be able to connect to DB.'
+    echo 'Set DB_HOST environment variable and preferable put it in a script, for example set_env_var.sh.'
+    exit 1
+fi
+
+set -e
+echo $DB_STARTUP_SCRIPT | mysql -h$DB_HOST -u $DB_USER -p$DB_PASSWORD
+cat pet_db.sql | mysql -h$DB_HOST -u $DB_USER -p$DB_PASSWORD $DB_NAME
+echo 'Regression DB Created'
+echo '===================================='
+echo ''
+
+
+
 echo '===================================='
 echo 'Launching the Server:'
 set -e
@@ -57,6 +95,7 @@ echo 'Server Launched'
 echo '===================================='
 echo ''
 
+
 echo '===================================='
 echo 'Launching Regression suit:'
 cd regression/Java_Regression/src -> /dev/null
@@ -65,6 +104,7 @@ java Tester.Tester
 cd - -> /dev/null
 echo '===================================='
 echo ''
+
 
 echo '===================================='
 echo 'Shutting down the server:'
@@ -77,6 +117,7 @@ echo 'Server Shut Down'
 echo '===================================='
 echo ''
 
+
 echo '===================================='
 echo 'Removing index regression copy:'
 set -e
@@ -88,5 +129,16 @@ set +e
 echo 'Index regression copy removed'
 echo '===================================='
 echo ''
+
+
+echo '===================================='
+echo 'Removing regression DB:'
+set -e
+echo $DB_REMOVE_SCRIPT | mysql -h$DB_HOST -u$DB_USER -p$DB_PASSWORD $DB_NAME
+set +e
+echo 'Removed regression database'
+echo '===================================='
+echo ''
+
 
 echo '###REGRESSION RUN COMPLETE###'
