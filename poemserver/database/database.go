@@ -1,7 +1,8 @@
 package database
 
 import (
-	"fmt"
+	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/ziutek/mymysql/mysql"
 	_ "github.com/ziutek/mymysql/native"
 )
@@ -28,30 +29,25 @@ type Database struct {
 	config *DBConfig
 }
 
-func NewConnectedDB(config *DBConfig) (db *Database, err error) {
-	db = &Database{config: config}
-	fmt.Println("Connecting to DB")
-	err = db.connect()
+func ConstructDBConnectionString(host, dbUser, dbName, dbPassword string) string {
+	return dbUser + ":" + dbPassword + "@tcp(" + host + ":" + PORT + ")/" + dbName
+	//return "user:password@tcp(127.0.0.1:3306)/hello"
+}
+
+func NewConnectedDB(config *DBConfig) (db *sql.DB, err error) {
+	dbString := ConstructDBConnectionString(config.host, config.user, config.dbName, config.dbPassword)
+
+	db, err = sql.Open("mysql", dbString)
 	if err != nil {
 		return nil, err
 	}
 
-	connection := mysql.New("tcp", "", config.host+":"+PORT, config.user, config.dbPassword, config.dbName)
-	err = connection.Connect()
+	err = db.Ping()
 	if err != nil {
 		return nil, err
 	}
 
-	rows, _, err := connection.Query("select * from pet")
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Printf("In table Pet %d rows.", len(rows))
-
-	db.conn = connection
-
-	return db, nil
+	return db, err
 }
 
 func (db *Database) connect() (err error) {
