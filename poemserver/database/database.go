@@ -31,7 +31,7 @@ type Database struct {
 
 func ConstructDBConnectionString(host, dbUser, dbName, dbPassword string) string {
 	return dbUser + ":" + dbPassword + "@tcp(" + host + ":" + PORT + ")/" + dbName
-	//return "user:password@tcp(127.0.0.1:3306)/hello"
+
 }
 
 func NewConnectedDB(config *DBConfig) (db *sql.DB, err error) {
