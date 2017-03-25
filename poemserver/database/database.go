@@ -3,8 +3,6 @@ package database
 import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/ziutek/mymysql/mysql"
-	_ "github.com/ziutek/mymysql/native"
 )
 
 const PORT = "3306"
@@ -23,11 +21,6 @@ func NewDBConfig(host, user, dbName, dbPassword string) *DBConfig {
 }
 
 //DB Connection
-
-type Database struct {
-	conn   mysql.Conn
-	config *DBConfig
-}
 
 func ConstructDBConnectionString(host, dbUser, dbName, dbPassword string) string {
 	return dbUser + ":" + dbPassword + "@tcp(" + host + ":" + PORT + ")/" + dbName
@@ -48,8 +41,4 @@ func NewConnectedDB(config *DBConfig) (db *sql.DB, err error) {
 	}
 
 	return db, err
-}
-
-func (db *Database) connect() (err error) {
-	return nil
 }
