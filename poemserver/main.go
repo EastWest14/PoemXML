@@ -6,7 +6,6 @@ import (
 	"github.com/EastWest14/gAssert"
 	"poemXML/poemserver/database"
 	"poemXML/poemserver/handlers"
-	"poemXML/poemserver/index"
 	"poemXML/poemserver/poemstore"
 	"poemXML/poemserver/server"
 )
@@ -14,15 +13,8 @@ import (
 var poemServer *server.Server
 
 func main() {
-	indexPath, dbConfig := ExtractDBConfig()
-
-	_, err := database.NewConnectedDB(dbConfig)
-	if err != nil {
-		fmt.Println("Error launching DB.")
-		panic(err.Error())
-	}
-
-	fmt.Printf("Index path: %s\n", indexPath) //Deprecated
+	//fmt.Printf("Index path: %s\n", indexPath) //Deprecated
+	indexPath := ""
 	poemServer := Setup(indexPath)
 
 	fmt.Println("Starting server...")
@@ -47,16 +39,23 @@ func ExtractDBConfig() (indexPath string, dbConfig *database.DBConfig) {
 }
 
 func Setup(indexPath string) *server.Server {
+	indexPath, dbConfig := ExtractDBConfig()
+
+	db, err := database.NewConnectedDB(dbConfig)
+	if err != nil {
+		fmt.Println("Error launching DB.")
+		panic(err.Error())
+	}
+
 	poemServer = server.NewServer()
 
 	handlers := handlers.NewHandlersInstance()
 	poemServer.SetHandlers(handlers)
 
-	theIndex := index.New(indexPath)
-
-	poemStore := poemstore.NewStore(theIndex)
+	poemStore := poemstore.NewStore(nil, db)
 	handlers.SetPoemStore(poemStore)
-	err := poemStore.Check()
+	err = poemStore.Check()
+
 	gAssert.Assert(err == nil, fmt.Sprintf("Poem store couldn't be loaded: %v", err))
 
 	return poemServer
